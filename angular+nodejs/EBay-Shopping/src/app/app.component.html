@@ -1,0 +1,308 @@
+<!-- <script type="text/javascript" src="../../node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js"></script> -->
+<div class="container searchformcont">
+	<div class="text-center">
+		<img src="../../assets/header.png" alt="EBay">
+	</div>
+	<!-- {{diagnostic}} -->
+	<form class="searchform" #searchForm="ngForm">
+		<div class="form-group row formrows">
+			<span class="col-sm-2 fontbold">Key words<span style="color:red;">*</span></span>
+			<div class="col-sm-10">
+				<input type="input" class="form-control" id="keywords" placeholder="Enter keywords" autocomplete="on"
+				name="keywords" [(ngModel)]="searchform.keywords">
+				<!-- TODO: remove this: {{searchform.keywords}} -->
+			</div>
+		</div>
+		<div class="form-group row formrows">
+			<span class="col-sm-2 fontbold">Price range</span>
+			<div class="col-sm-10 nowrap">
+				<div class="minprice">
+					<input type="number" class="form-control" id="MinPrice" placeholder="Min Price" autocomplete="on"
+					name="MinPrice" [(ngModel)]="searchform.MinPrice">
+					<!-- TODO: remove this: {{searchform.MinPrice}} -->
+				</div>
+				<div class="maxprice">
+					<input type="number" class="form-control" id="MaxPrice" placeholder="Max Price" autocomplete="on"
+					name="MaxPrice" [(ngModel)]="searchform.MaxPrice">
+				</div>
+			</div>
+		</div>
+		<div class="form-group row formrows manychecks">
+			<span class="col-sm-2 fontbold">Condition</span>
+			<div class="col-sm-10 form-inline">
+				<input type="checkbox" id="checknew" 
+				name="checknew" [(ngModel)]="searchform.checknew">
+				<span class="fontbold">&nbsp;New&nbsp;</span>
+				<input type="checkbox" id="checkused" 
+				name="checkused" [(ngModel)]="searchform.checkused">
+				<span class="fontbold">&nbsp;Used&nbsp;</span>
+				<input type="checkbox" id="checkverygood" 
+				name="checkverygood" [(ngModel)]="searchform.checkverygood">
+				<span class="fontbold">&nbsp;Very Good&nbsp;</span>
+				<input type="checkbox" id="checkgood" 
+				name="checkgood" [(ngModel)]="searchform.checkgood">
+				<span class="fontbold">&nbsp;Good&nbsp;</span>
+				<input type="checkbox" id="checkacceptable" 
+				name="checkacceptable" [(ngModel)]="searchform.checkacceptable">
+				<span class="fontbold">&nbsp;Acceptable&nbsp;</span>
+			</div>
+		</div>
+		<div class="form-group row formrows">
+			<span class="col-sm-2 fontbold">Seller</span>
+			<div class="col-sm-10 form-inline">
+				<input type="checkbox" id="ReturnsAcceptedOnly" 
+				name="ReturnsAcceptedOnly" [(ngModel)]="searchform.ReturnsAcceptedOnly">
+				<span class="fontbold">&nbsp;Return Accepted&nbsp;</span>
+			</div>
+		</div>
+		<div class="form-group row formrows">
+			<span class="col-sm-2 fontbold">Shipping</span>
+			<div class="col-sm-10 form-inline">
+				<input type="checkbox" id="FreeShippingOnly" 
+				name="FreeShippingOnly" [(ngModel)]="searchform.FreeShippingOnly">
+				<span class="fontbold">&nbsp;Free&nbsp;</span>
+				<input type="checkbox" id="ExpeditedShippingType" 
+				name="ExpeditedShippingType" [(ngModel)]="searchform.ExpeditedShippingType">
+				<span class="fontbold">&nbsp;Expedited&nbsp;</span>
+			</div>
+		</div>
+		<div class="form-group row formrows">
+			<span class="col-sm-2 fontbold">Sort Order</span>
+			<div class="col-sm-10 selectdiv">
+				<mat-select class="custom-select matselectself" disableOptionCentering [(value)]="sortOrderValue">
+					<mat-option class="selectOptions" *ngFor="let sortitem of sortOrder" [value]="sortitem">
+						<img *ngIf="sortOrderValue==sortitem" src="../../assets/baseline_done_black_18dp.png" alt="yes"/>
+						<img *ngIf="sortOrderValue!=sortitem" src="../../assets/baseline_done_black_18dp_back.png" alt="yes"/>
+						{{sortitem}}
+					</mat-option>
+				</mat-select>
+			</div>
+		</div>
+		<div class="form-group row justify-content-end buttondiv">
+			<button class="btn btn-primary searchbtn" id="searchbtn" (click)="searchSubmit();">
+				<img src="../../assets/baseline_search_white_18dp.png" alt="s">
+				Search
+			</button>
+			<button class="btn btn-secondary clearbtn" id="clearbtn" (click)="clearSubmit();">
+				<img src="../../assets/baseline_clear_all_white_18dp.png" alt="c">
+				Clear
+			</button>
+		</div>
+	</form>
+	<div class="text-center keywordsdiv" #keywordsdiv>Please enter a keyword</div>
+	<div class="text-center pricediv" #pricediv>Please use appropriate values for minPrice/maxPrice</div>
+	<div class="text-center resultdiv" #resultdiv>No exact matches found</div>
+</div>
+
+<hr #hrline>
+
+<div class="container resultlists" #resultlists>
+	<div class="form-group row resultbar">
+		<div class="col-sm-6 form-inline fontresultfor"  #printresultdiv></div>
+		<nav class="col-sm-6 row justify-content-center paginationbar">
+			<ngb-pagination (pageChange)="onpagechange()" id="pagination" [(collectionSize)]="collectionSize" [(page)]="page" 
+							[(pageSize)]="pageSize" [boundaryLinks]="false" size="sm" [maxSize]= "paginationMaxSize"
+							>
+				<ng-template ngbPaginationPrevious><span style="font-size:0.5rem;">«</span>&nbsp;&nbsp;Previous</ng-template>
+				<ng-template ngbPaginationNext>Next&nbsp;&nbsp;<span style="font-size:0.5rem;">»</span></ng-template>
+			</ngb-pagination>
+		</nav>
+	</div>
+	<div class="cardlist" id="cardlist">
+		<div class="cardbody row"
+			 *ngFor="let item of items | slice: (page-1)*5 : page*5; let i = index"
+			 >
+			<div class="cardimgdiv col-sm-2">
+				<img class="cardimg" alt="cardimg" src="{{item.galleryURL}}"/>
+			</div>
+			<div class="carddetaildiv col-sm-10">
+				<div class="cardcontentdiv">
+					<div class="cardtitle"><a href={{item.viewItemURL}} target="_blank">{{item.title}}</a></div>
+					<div class="cardprice">
+						<span class="fontbold">Price: </span>
+						${{item.price}}</div>
+					<div class="cardl_b">
+						<div class="cardlocation"><span class="fontoblique">{{item.location}}&nbsp;&nbsp;</span></div>
+						<button class="cardbutton btn btn-light" (click)="showHidDetail($event,i);">Show Details</button>
+					</div>
+				</div>
+				<div class="carddetailmain" *ngIf="isHidden[i]">
+					<mat-tab-group *ngIf="mat_lab_flag" mat-stretch-tabs>
+						<mat-tab label="Basic Info">
+							<div class="detailtab">
+								<div class="detailinfo">
+									<div class="detailtitle"><span class="fontbold">Category Name</span></div>
+									<div class="detailcontent">{{item.categoryName}}</div>
+								</div>
+								<div class="detailinfo">
+									<div class="detailtitle"><span class="fontbold">Condition</span></div>
+									<div class="detailcontent">{{item.condition}}</div>
+								</div>
+							</div>
+						</mat-tab>
+						<mat-tab label="Shipping Info">
+						<div class="detailtab">
+							<div class="detailinfo">
+								<div class="detailtitle"><span class="fontbold">ShippingType</span></div>
+								<div class="detailcontent">{{item.shippingType}}</div>
+							</div>
+							<div class="detailinfo">
+								<div class="detailtitle"><span class="fontbold">Shipping cost</span></div>
+								<div class="detailcontent">{{item.shippingServiceCost}}</div>
+							</div>
+							<div class="detailinfo">
+								<div class="detailtitle"><span class="fontbold">Shiptolocations</span></div>
+								<div class="detailcontent">{{item.shipToLocations}}</div>
+							</div>
+							<div class="detailinfo">
+								<div class="detailtitle"><span class="fontbold">ExpeditedShipping</span></div>
+								<div class="detailcontent ">
+									<img *ngIf="!item.expeditedShipping" class="hookcross"
+									src="../../assets/no.png" alt="False"/>
+									<img *ngIf="item.expeditedShipping" class="hookcross"
+									src="../../assets/yes.png" alt="True"/>
+								</div>
+							</div>
+							<div class="detailinfo">
+								<div class="detailtitle"><span class="fontbold">OneDayShippingAvailable</span></div>
+								<div class="detailcontent ">
+									<img *ngIf="item.oneDayShippingAvailable == false" class="hookcross"
+									src="../../assets/no.png" alt="False"/>
+									<img *ngIf="item.oneDayShippingAvailable" class="hookcross"
+									src="../../assets/yes.png" alt="True"/>
+								</div>
+							</div>
+							</div>
+						</mat-tab>
+						<mat-tab label="Listing Info">
+						<div class="detailtab">
+							<div class="detailinfo">
+								<div class="detailtitle"><span class="fontbold">BestOfferEnabled</span></div>
+								<div class="detailcontent ">
+									<img *ngIf="!item.bestOfferEnabled" class="hookcross"
+									src="../../assets/no.png" alt="False"/>
+									<img *ngIf="item.bestOfferEnabled" class="hookcross"
+									src="../../assets/yes.png" alt="True"/>
+								</div>
+							</div>
+							<div class="detailinfo">
+								<div class="detailtitle"><span class="fontbold">BuyItNowAvailable</span></div>
+								<div class="detailcontent ">
+									<img *ngIf="!item.buyItNowAvailable" class="hookcross"
+									src="../../assets/no.png" alt="False"/>
+									<img *ngIf="item.buyItNowAvailable" class="hookcross"
+									src="../../assets/yes.png" alt="True"/>
+								</div>
+							</div>
+							<div class="detailinfo">
+								<div class="detailtitle"><span class="fontbold">ListingType</span></div>
+								<div class="detailcontent ">{{item.listingType}}</div>
+							</div>
+							<div class="detailinfo">
+								<div class="detailtitle"><span class="fontbold">Gift</span></div>
+								<div class="detailcontent ">
+									<img *ngIf="!item.gift" class="hookcross"
+									src="../../assets/no.png" alt="False"/>
+									<img *ngIf="item.gift" class="hookcross"
+									src="../../assets/yes.png" alt="True"/>
+								</div>
+							</div>
+							<div class="detailinfo">
+								<div class="detailtitle"><span class="fontbold">WatchCount</span></div>
+								<div class="detailcontent ">{{item.watchCount}}</div>
+							</div>
+							</div>
+						</mat-tab>
+					</mat-tab-group>
+				<mat-tab-group *ngIf="!mat_lab_flag">
+						<mat-tab label="Basic Info">
+						<div class="detailtab">
+							<div class="detailinfo">
+								<div class="detailtitle"><span class="fontbold">Category Name</span></div>
+								<div class="detailcontent ">{{item.categoryName}}</div>
+							</div>
+							<div class="detailinfo">
+								<div class="detailtitle"><span class="fontbold">Condition</span></div>
+								<div class="detailcontent ">{{item.condition}}</div>
+							</div>
+							</div>
+						</mat-tab>
+						<mat-tab label="Shipping Info">
+						<div class="detailtab">
+							<div class="detailinfo">
+								<div class="detailtitle"><span class="fontbold">ShippingType</span></div>
+								<div class="detailcontent ">{{item.shippingType}}</div>
+							</div>
+							<div class="detailinfo">
+								<div class="detailtitle"><span class="fontbold">Shipping cost</span></div>
+								<div class="detailcontent ">{{item.shippingServiceCost}}</div>
+							</div>
+							<div class="detailinfo">
+								<div class="detailtitle"><span class="fontbold">Shiptolocations</span></div>
+								<div class="detailcontent ">{{item.shipToLocations}}</div>
+							</div>
+							<div class="detailinfo">
+								<div class="detailtitle"><span class="fontbold">ExpeditedShipping</span></div>
+								<div class="detailcontent ">
+									<img *ngIf="!item.expeditedShipping" class="hookcross"
+									src="../../assets/no.png" alt="False"/>
+									<img *ngIf="item.expeditedShipping" class="hookcross"
+									src="../../assets/yes.png" alt="True"/>
+								</div>
+							</div>
+							<div class="detailinfo">
+								<div class="detailtitle"><span class="fontbold">OneDayShippingAvailable</span></div>
+								<div class="detailcontent ">
+									<img *ngIf="!item.oneDayShippingAvailable" class="hookcross"
+									src="../../assets/no.png" alt="False"/>
+									<img *ngIf="item.oneDayShippingAvailable" class="hookcross"
+									src="../../assets/yes.png" alt="True"/>
+								</div>
+							</div>
+							</div>
+						</mat-tab>
+						<mat-tab label="Listing Info">
+						<div class="detailtab">
+							<div class="detailinfo">
+								<div class="detailtitle"><span class="fontbold">BestOfferEnabled</span></div>
+								<div class="detailcontent ">
+									<img *ngIf="!item.bestOfferEnabled" class="hookcross"
+									src="../../assets/no.png" alt="False"/>
+									<img *ngIf="item.bestOfferEnabled" class="hookcross"
+									src="../../assets/yes.png" alt="True"/>
+								</div>
+							</div>
+							<div class="detailinfo">
+								<div class="detailtitle"><span class="fontbold">BuyItNowAvailable</span></div>
+								<div class="detailcontent ">
+									<img *ngIf="!item.buyItNowAvailable" class="hookcross"
+									src="../../assets/no.png" alt="False"/>
+									<img *ngIf="item.buyItNowAvailable" class="hookcross"
+									src="../../assets/yes.png" alt="True"/>
+								</div>
+							</div>
+							<div class="detailinfo">
+								<div class="detailtitle"><span class="fontbold">ListingType</span></div>
+								<div class="detailcontent ">{{item.listingType}}</div>
+							</div>
+							<div class="detailinfo">
+								<div class="detailtitle"><span class="fontbold">Gift</span></div>
+								<div class="detailcontent ">
+									<img *ngIf="!item.gift" class="hookcross"
+									src="../../assets/no.png" alt="False"/>
+									<img *ngIf="item.gift" class="hookcross"
+									src="../../assets/yes.png" alt="True"/>
+								</div>
+							</div>
+							<div class="detailinfo">
+								<div class="detailtitle"><span class="fontbold">WatchCount</span></div>
+								<div class="detailcontent ">{{item.watchCount}}</div>
+							</div>
+							</div>
+						</mat-tab>
+					</mat-tab-group>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

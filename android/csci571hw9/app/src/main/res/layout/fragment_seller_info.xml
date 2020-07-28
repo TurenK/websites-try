@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="top"
+    android:theme="@style/AppTheme"
+    tools:context=".SellerInfoFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/fragments_margin_small"
+            android:paddingTop="@dimen/fragments_margin_small"
+            android:paddingEnd="@dimen/fragments_margin_small"
+            android:paddingBottom="@dimen/fragments_margin_small">
+
+            <LinearLayout
+                android:id="@+id/sellerinfo_information_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/sellerinfo_information_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/fragments_margin_small"
+                    android:gravity="start"
+                    android:text="@string/seller_information"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/toolbartext"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/sellerinfo_information_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/fragments_margin_big"
+                    android:layout_marginTop="@dimen/fragments_margin_small"
+                    android:gravity="start"
+                    android:text="@string/test_text"
+                    android:textSize="@dimen/search_item_ship" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/sellerinfo_ReturnPolicy_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:layout_below="@id/sellerinfo_information_layout"
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/sellerinfo_hrline_1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1.5dp"
+                    android:layout_marginStart="@dimen/fragments_margin_small"
+                    android:layout_marginTop="@dimen/fragments_margin_small"
+                    android:background="@color/gray" />
+
+                <TextView
+                    android:id="@+id/sellerinfo_ReturnPolicy_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/fragments_margin_small"
+                    android:layout_marginTop="@dimen/fragments_margin_small"
+                    android:gravity="start"
+                    android:text="@string/return_policies"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/toolbartext"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/sellerinfo_ReturnPolicy_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/fragments_margin_big"
+                    android:layout_marginTop="@dimen/fragments_margin_small"
+                    android:gravity="start"
+                    android:text="@string/test_text"
+                    android:textSize="@dimen/search_item_ship" />
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

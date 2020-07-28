@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>EBay Shopping</title>
+		<link rel="stylesheet" href="EBay.css" />
+		<script language="javascript" type="text/javascript" src="EBay.js"></script>
+	</head>
+	<body>
+		<div class="outer" id="outer">
+			<div class="header" alt="EBay" id="header">
+				<input type="image" class="ebay_img" src="imgs/header.png" alt="ebay" onclick="windowtoebay()"/>
+				&nbsp Shopping
+			</div>
+			<form name="search_form" id="search_form" class="search_form" onsubmit="return submitForm()" autocomplete="on">
+				<table class="search_table" border="1" bordercolor="#000000" cellspacing="0" cellpadding="0">
+						<tr class="tablecontent">
+							<td>
+								<span class="TNFont" style="color: black;font-weight: bold;">Key Words</span>
+								<span class="TNFont" style="color: red">*</span>
+								<span class="TNFont" style="color: black;font-weight: bold;">: &nbsp &nbsp </span>
+								<input class="keywords_input" name="keywords_input" id="keywords_input" required="required" autocomplete="on"/>
+							</td>
+						</tr>
+						<tr class="tablecontent">
+							<td>
+								<span class="TNFont" style="color: black;font-weight: bold;">Price Range: &nbsp </span>
+								<span class="TNFont">From &nbsp <span>
+								<input class="rangeform1" name="rangeform1" id="rangeform1" type="number" style="width: 55px;" autocomplete="on" step="1.00"/>
+								<span class="TNFont"> &nbsp to &nbsp <span>
+								<input class="rangeform2" name="rangeform2" id="rangeform2" type="number" style="width: 55px;" autocomplete="on" step="1.00"/>
+							</td>
+						</tr>
+						<tr class="tablecontent">
+							<td>
+								<span class="TNFont" style="color: black;font-weight: bold;">Condition: &nbsp </span>
+								<input type="checkbox" id="new" name="new"/>
+								<span class="TNFont">New &nbsp <span>
+								<input type="checkbox" id="used" name="used"/>
+								<span class="TNFont">Used &nbsp <span>
+								<input type="checkbox" id="verygood" name="verygood"/>
+								<span class="TNFont">Very Good &nbsp <span>
+								<input type="checkbox" id="good" name="good"/>
+								<span class="TNFont">Good &nbsp <span>
+								<input type="checkbox" id="acceptable" name="acceptable"/>
+								<span class="TNFont">Acceptable &nbsp <span>
+							</td>
+						</tr>
+						<tr class="tablecontent">
+							<td>
+								<span class="TNFont" style="color: black;font-weight: bold;">Seller: &nbsp </span>
+								<input type="checkbox" id="return" name="return"/>
+								<span class="TNFont">Return Accepted &nbsp <span>
+							</td>
+						</tr>
+						<tr class="tablecontent">
+							<td>
+								<span class="TNFont" style="color: black;font-weight: bold;">Shipping: &nbsp </span>
+								<input type="checkbox" id="free" name="free"/>
+								<span class="TNFont">Free &nbsp <span>
+								<input type="checkbox" id="expedited" name="expedited"/>
+								<span class="TNFont">Expedited &nbsp <span>
+							</td>
+						</tr>
+						<tr class="tablecontent">
+							<td>
+								<span class="TNFont" style="color: black;font-weight: bold;">Sort by: &nbsp </span>
+								<select class="selectbox" name="selectbox" id="selectbox">
+									<option selected="selected" value="Best Match" class="selectitems">Best Match</option>
+									<option value="Price: highest first" class="selectitems">Price: highest first</option>
+									<option value="Price + Shipping: highest first" class="selectitems">Price + Shipping: highest first</option>
+									<option value="Price + Shipping: lowest first" class="selectitems">Price + Shipping: lowest first</option>
+								</select>
+							</td>
+						</tr>
+						<tr class="tablecontent">
+							<td>
+								<button type="button" id="clear" name="clear" class="clear" onClick="clearForm()">Clear</button>
+								<button type="submit" id="search" name="search" class="search">Search</button>
+							</td>
+						</tr>
+				</table>
+			</form>
+			<div class="outerlistdiv" id="outerlistdiv" name="outerlistdiv">
+				<div class="resultsfound" id="resultsfound" name="resultsfound">
+				</div>
+				<hr id="horizontaline"/>
+				<div class="itemlist" id="itemlist" name="itemlist">
+					<div class="newitem" id="newitem1" name="newitem1">
+						<div class="outerinfo" id="outerinfo1" name="outerinfo1">
+							<div class="itemimgdiv" id="itemimgdiv1" name="itemimgdiv1">
+								<img class="itemimg" id="itemimg1" name="itemimg1" alt="itemimg"/>
+							</div>
+							<div class="infodiv" id="infodiv1" name="infodiv1">
+								<div class="itemtitlediv" id="itemtitlediv1" name="itemtitlediv1">
+									<a class="itemtitle" id="itemtitle1" name="itemtitle1"></a>
+								</div>
+								<div class="itemcategorydiv" id="itemcategorydiv1" name="itemcategorydiv1">
+									<span class="itemcategoryca" id="itemcategoryca1"></span>
+									<span class="itemcategoryco" id="itemcategoryco1"></span>
+									<input type="image" class="itemcategoryre" id="itemcategoryre1" name="itemcategoryre1" alt="Re->"/>
+								</div>
+								<div class="itemconditiondiv" id="itemconditiondiv1" name="itemconditiondiv1">
+									<span class="itemconditioncon" id="itemconditioncon1"></span>
+									<img class="itemconditiontop" id="itemconditiontop1" name="itemconditiontop1" alt="Top"/>
+								</div>
+								<div class="itemsellerdiv" id="itemsellerdiv1" name="itemsellerdiv1">
+									<span class="itemseller1" id="itemseller11"></span>
+									<span class="itemseller2" id="itemseller21"></span>
+									<span class="itemseller3" id="itemseller31"></span>
+								</div>
+								<div class="itemshippingdiv" id="itemshippingdiv1" name="itemshippingdiv1">
+									<span class="itemshipping1" id="itemshipping11"></span>
+								</div>
+								<div class="itempricediv" id="itempricediv1" name="itempricediv1">
+									<span class="itempricecon" id="itempricecon1"></span>
+									<span class="itempriceloca" id="itempriceloca1"></span>
+								</div>
+							</div>
+						</div>
+						<input class="itemredcross" id="itemredcross1" name="itemredcross1" type="image" src="imgs/redcross.png" alt="close"/>
+					</div>
+					<div class="newitem" id="newitem2" name="newitem2">
+						<div class="outerinfo" id="outerinfo2" name="outerinfo2">
+							<div class="itemimgdiv" id="itemimgdiv2" name="itemimgdiv2">
+								<img class="itemimg" id="itemimg2" name="itemimg2" alt="itemimg"/>
+							</div>
+							<div class="infodiv" id="infodiv2" name="infodiv2">
+								<div class="itemtitlediv" id="itemtitlediv2" name="itemtitlediv2">
+									<a class="itemtitle" id="itemtitle2" name="itemtitle2"></a>
+								</div>
+								<div class="itemcategorydiv" id="itemcategorydiv2" name="itemcategorydiv2">
+									<span class="itemcategoryca" id="itemcategoryca2"></span>
+									<span class="itemcategoryco" id="itemcategoryco2"></span>
+									<input type="image" class="itemcategoryre" id="itemcategoryre2" name="itemcategoryre2" alt="Re->"/>
+								</div>
+								<div class="itemconditiondiv" id="itemconditiondiv2" name="itemconditiondiv2">
+									<span class="itemconditioncon" id="itemconditioncon2"></span>
+									<img class="itemconditiontop" id="itemconditiontop2" name="itemconditiontop2" alt="Top"/>
+								</div>
+								<div class="itemsellerdiv" id="itemsellerdiv2" name="itemsellerdiv2">
+									<span class="itemseller1" id="itemseller12"></span>
+									<span class="itemseller2" id="itemseller22"></span>
+									<span class="itemseller3" id="itemseller32"></span>
+								</div>
+								<div class="itemshippingdiv" id="itemshippingdiv2" name="itemshippingdiv2">
+									<span class="itemshipping1" id="itemshipping12"></span>
+								</div>
+								<div class="itempricediv" id="itempricediv2" name="itempricediv2">
+									<span class="itempricecon" id="itempricecon2"></span>
+									<span class="itempriceloca" id="itempriceloca2"></span>
+								</div>
+							</div>
+						</div>
+						<input class="itemredcross" id="itemredcross2" name="itemredcross2" type="image" src="imgs/redcross.png" alt="close"/>
+					</div>
+					<div class="newitem" id="newitem3" name="newitem3">
+						<div class="outerinfo" id="outerinfo3" name="outerinfo3">
+							<div class="itemimgdiv" id="itemimgdiv3" name="itemimgdiv3">
+								<img class="itemimg" id="itemimg3" name="itemimg3" alt="itemimg"/>
+							</div>
+							<div class="infodiv" id="infodiv3" name="infodiv3">
+								<div class="itemtitlediv" id="itemtitlediv3" name="itemtitlediv3">
+									<a class="itemtitle" id="itemtitle3" name="itemtitle3"></a>
+								</div>
+								<div class="itemcategorydiv" id="itemcategorydiv3" name="itemcategorydiv3">
+									<span class="itemcategoryca" id="itemcategoryca3"></span>
+									<span class="itemcategoryco" id="itemcategoryco3"></span>
+									<input type="image" class="itemcategoryre" id="itemcategoryre3" name="itemcategoryre3" alt="Re->"/>
+								</div>
+								<div class="itemconditiondiv" id="itemconditiondiv3" name="itemconditiondiv3">
+									<span class="itemconditioncon" id="itemconditioncon3"></span>
+									<img class="itemconditiontop" id="itemconditiontop3" name="itemconditiontop3" alt="Top"/>
+								</div>
+								<div class="itemsellerdiv" id="itemsellerdiv3" name="itemsellerdiv3">
+									<span class="itemseller1" id="itemseller13"></span>
+									<span class="itemseller2" id="itemseller23"></span>
+									<span class="itemseller3" id="itemseller33"></span>
+								</div>
+								<div class="itemshippingdiv" id="itemshippingdiv3" name="itemshippingdiv3">
+									<span class="itemshipping1" id="itemshipping13"></span>
+								</div>
+								<div class="itempricediv" id="itempricediv3" name="itempricediv3">
+									<span class="itempricecon" id="itempricecon3"></span>
+									<span class="itempriceloca" id="itempriceloca3"></span>
+								</div>
+							</div>
+						</div>
+						<input class="itemredcross" id="itemredcross3" name="itemredcross3" type="image" src="imgs/redcross.png" alt="close"/>
+					</div>
+					<div class="newitem" id="newitem4" name="newitem4">
+						<div class="outerinfo" id="outerinfo4" name="outerinfo4">
+							<div class="itemimgdiv" id="itemimgdiv4" name="itemimgdiv4">
+								<img class="itemimg" id="itemimg4" name="itemimg4" alt="itemimg"/>
+							</div>
+							<div class="infodiv" id="infodiv4" name="infodiv4">
+								<div class="itemtitlediv" id="itemtitlediv4" name="itemtitlediv4">
+									<a class="itemtitle" id="itemtitle4" name="itemtitle4"></a>
+								</div>
+								<div class="itemcategorydiv" id="itemcategorydiv4" name="itemcategorydiv4">
+									<span class="itemcategoryca" id="itemcategoryca4"></span>
+									<span class="itemcategoryco" id="itemcategoryco4"></span>
+									<input type="image" class="itemcategoryre" id="itemcategoryre4" name="itemcategoryre4" alt="Re->"/>
+								</div>
+								<div class="itemconditiondiv" id="itemconditiondiv4" name="itemconditiondiv4">
+									<span class="itemconditioncon" id="itemconditioncon4"></span>
+									<img class="itemconditiontop" id="itemconditiontop4" name="itemconditiontop4" alt="Top"/>
+								</div>
+								<div class="itemsellerdiv" id="itemsellerdiv4" name="itemsellerdiv4">
+									<span class="itemseller1" id="itemseller14"></span>
+									<span class="itemseller2" id="itemseller24"></span>
+									<span class="itemseller3" id="itemseller34"></span>
+								</div>
+								<div class="itemshippingdiv" id="itemshippingdiv4" name="itemshippingdiv4">
+									<span class="itemshipping1" id="itemshipping14"></span>
+								</div>
+								<div class="itempricediv" id="itempricediv4" name="itempricediv4">
+									<span class="itempricecon" id="itempricecon4"></span>
+									<span class="itempriceloca" id="itempriceloca4"></span>
+								</div>
+							</div>
+						</div>
+						<input class="itemredcross" id="itemredcross4" name="itemredcross4" type="image" src="imgs/redcross.png" alt="close"/>
+					</div>
+					<div class="newitem" id="newitem5" name="newitem5">
+						<div class="outerinfo" id="outerinfo5" name="outerinfo5">
+							<div class="itemimgdiv" id="itemimgdiv5" name="itemimgdiv5">
+								<img class="itemimg" id="itemimg5" name="itemimg5" alt="itemimg"/>
+							</div>
+							<div class="infodiv" id="infodiv5" name="infodiv5">
+								<div class="itemtitlediv" id="itemtitlediv5" name="itemtitlediv5">
+									<a class="itemtitle" id="itemtitle5" name="itemtitle5"></a>
+								</div>
+								<div class="itemcategorydiv" id="itemcategorydiv5" name="itemcategorydiv5">
+									<span class="itemcategoryca" id="itemcategoryca5"></span>
+									<span class="itemcategoryco" id="itemcategoryco5"></span>
+									<input type="image" class="itemcategoryre" id="itemcategoryre5" name="itemcategoryre5" alt="Re->"/>
+								</div>
+								<div class="itemconditiondiv" id="itemconditiondiv5" name="itemconditiondiv5">
+									<span class="itemconditioncon" id="itemconditioncon5"></span>
+									<img class="itemconditiontop" id="itemconditiontop5" name="itemconditiontop5" alt="Top"/>
+								</div>
+								<div class="itemsellerdiv" id="itemsellerdiv5" name="itemsellerdiv5">
+									<span class="itemseller1" id="itemseller15"></span>
+									<span class="itemseller2" id="itemseller25"></span>
+									<span class="itemseller3" id="itemseller35"></span>
+								</div>
+								<div class="itemshippingdiv" id="itemshippingdiv5" name="itemshippingdiv5">
+									<span class="itemshipping1" id="itemshipping15"></span>
+								</div>
+								<div class="itempricediv" id="itempricediv5" name="itempricediv5">
+									<span class="itempricecon" id="itempricecon5"></span>
+									<span class="itempriceloca" id="itempriceloca5"></span>
+								</div>
+							</div>
+						</div>
+						<input class="itemredcross" id="itemredcross5" name="itemredcross5" type="image" src="imgs/redcross.png" alt="close"/>
+					</div>
+					<div class="newitem" id="newitem6" name="newitem6">
+						<div class="outerinfo" id="outerinfo6" name="outerinfo6">
+							<div class="itemimgdiv" id="itemimgdiv6" name="itemimgdiv6">
+								<img class="itemimg" id="itemimg6" name="itemimg6" alt="itemimg"/>
+							</div>
+							<div class="infodiv" id="infodiv6" name="infodiv6">
+								<div class="itemtitlediv" id="itemtitlediv6" name="itemtitlediv6">
+									<a class="itemtitle" id="itemtitle6" name="itemtitle6"></a>
+								</div>
+								<div class="itemcategorydiv" id="itemcategorydiv6" name="itemcategorydiv6">
+									<span class="itemcategoryca" id="itemcategoryca6"></span>
+									<span class="itemcategoryco" id="itemcategoryco6"></span>
+									<input type="image" class="itemcategoryre" id="itemcategoryre6" name="itemcategoryre6" alt="Re->"/>
+								</div>
+								<div class="itemconditiondiv" id="itemconditiondiv6" name="itemconditiondiv6">
+									<span class="itemconditioncon" id="itemconditioncon6"></span>
+									<img class="itemconditiontop" id="itemconditiontop6" name="itemconditiontop6" alt="Top"/>
+								</div>
+								<div class="itemsellerdiv" id="itemsellerdiv6" name="itemsellerdiv6">
+									<span class="itemseller1" id="itemseller16"></span>
+									<span class="itemseller2" id="itemseller26"></span>
+									<span class="itemseller3" id="itemseller36"></span>
+								</div>
+								<div class="itemshippingdiv" id="itemshippingdiv6" name="itemshippingdiv6">
+									<span class="itemshipping1" id="itemshipping16"></span>
+								</div>
+								<div class="itempricediv" id="itempricediv6" name="itempricediv6">
+									<span class="itempricecon" id="itempricecon6"></span>
+									<span class="itempriceloca" id="itempriceloca6"></span>
+								</div>
+							</div>
+						</div>
+						<input class="itemredcross" id="itemredcross6" name="itemredcross6" type="image" src="imgs/redcross.png" alt="close"/>
+					</div>
+					<div class="newitem" id="newitem7" name="newitem7">
+						<div class="outerinfo" id="outerinfo7" name="outerinfo7">
+							<div class="itemimgdiv" id="itemimgdiv7" name="itemimgdiv7">
+								<img class="itemimg" id="itemimg7" name="itemimg7" alt="itemimg"/>
+							</div>
+							<div class="infodiv" id="infodiv7" name="infodiv7">
+								<div class="itemtitlediv" id="itemtitlediv7" name="itemtitlediv7">
+									<a class="itemtitle" id="itemtitle7" name="itemtitle7"></a>
+								</div>
+								<div class="itemcategorydiv" id="itemcategorydiv7" name="itemcategorydiv7">
+									<span class="itemcategoryca" id="itemcategoryca7"></span>
+									<span class="itemcategoryco" id="itemcategoryco7"></span>
+									<input type="image" class="itemcategoryre" id="itemcategoryre7" name="itemcategoryre7" alt="Re->"/>
+								</div>
+								<div class="itemconditiondiv" id="itemconditiondiv7" name="itemconditiondiv7">
+									<span class="itemconditioncon" id="itemconditioncon7"></span>
+									<img class="itemconditiontop" id="itemconditiontop7" name="itemconditiontop7" alt="Top"/>
+								</div>
+								<div class="itemsellerdiv" id="itemsellerdiv7" name="itemsellerdiv7">
+									<span class="itemseller1" id="itemseller17"></span>
+									<span class="itemseller2" id="itemseller27"></span>
+									<span class="itemseller3" id="itemseller37"></span>
+								</div>
+								<div class="itemshippingdiv" id="itemshippingdiv7" name="itemshippingdiv7">
+									<span class="itemshipping1" id="itemshipping17"></span>
+								</div>
+								<div class="itempricediv" id="itempricediv7" name="itempricediv7">
+									<span class="itempricecon" id="itempricecon7"></span>
+									<span class="itempriceloca" id="itempriceloca7"></span>
+								</div>
+							</div>
+						</div>
+						<input class="itemredcross" id="itemredcross7" name="itemredcross7" type="image" src="imgs/redcross.png" alt="close"/>
+					</div>
+					<div class="newitem" id="newitem8" name="newitem8">
+						<div class="outerinfo" id="outerinfo8" name="outerinfo8">
+							<div class="itemimgdiv" id="itemimgdiv8" name="itemimgdiv8">
+								<img class="itemimg" id="itemimg8" name="itemimg8" alt="itemimg"/>
+							</div>
+							<div class="infodiv" id="infodiv8" name="infodiv8">
+								<div class="itemtitlediv" id="itemtitlediv8" name="itemtitlediv8">
+									<a class="itemtitle" id="itemtitle8" name="itemtitle8"></a>
+								</div>
+								<div class="itemcategorydiv" id="itemcategorydiv8" name="itemcategorydiv8">
+									<span class="itemcategoryca" id="itemcategoryca8"></span>
+									<span class="itemcategoryco" id="itemcategoryco8"></span>
+									<input type="image" class="itemcategoryre" id="itemcategoryre8" name="itemcategoryre8" alt="Re->"/>
+								</div>
+								<div class="itemconditiondiv" id="itemconditiondiv8" name="itemconditiondiv8">
+									<span class="itemconditioncon" id="itemconditioncon8"></span>
+									<img class="itemconditiontop" id="itemconditiontop8" name="itemconditiontop8" alt="Top"/>
+								</div>
+								<div class="itemsellerdiv" id="itemsellerdiv8" name="itemsellerdiv8">
+									<span class="itemseller1" id="itemseller18"></span>
+									<span class="itemseller2" id="itemseller28"></span>
+									<span class="itemseller3" id="itemseller38"></span>
+								</div>
+								<div class="itemshippingdiv" id="itemshippingdiv8" name="itemshippingdiv8">
+									<span class="itemshipping1" id="itemshipping18"></span>
+								</div>
+								<div class="itempricediv" id="itempricediv8" name="itempricediv3">
+									<span class="itempricecon" id="itempricecon8"></span>
+									<span class="itempriceloca" id="itempriceloca8"></span>
+								</div>
+							</div>
+						</div>
+						<input class="itemredcross" id="itemredcross8" name="itemredcross8" type="image" src="imgs/redcross.png" alt="close"/>
+					</div>
+					<div class="newitem" id="newitem9" name="newitem9">
+						<div class="outerinfo" id="outerinfo9" name="outerinfo9">
+							<div class="itemimgdiv" id="itemimgdiv9" name="itemimgdiv9">
+								<img class="itemimg" id="itemimg9" name="itemimg9" alt="itemimg"/>
+							</div>
+							<div class="infodiv" id="infodiv9" name="infodiv9">
+								<div class="itemtitlediv" id="itemtitlediv9" name="itemtitlediv9">
+									<a class="itemtitle" id="itemtitle9" name="itemtitle9"></a>
+								</div>
+								<div class="itemcategorydiv" id="itemcategorydiv9" name="itemcategorydiv9">
+									<span class="itemcategoryca" id="itemcategoryca9"></span>
+									<span class="itemcategoryco" id="itemcategoryco9"></span>
+									<input type="image" class="itemcategoryre" id="itemcategoryre9" name="itemcategoryre9" alt="Re->"/>
+								</div>
+								<div class="itemconditiondiv" id="itemconditiondiv9" name="itemconditiondiv9">
+									<span class="itemconditioncon" id="itemconditioncon9"></span>
+									<img class="itemconditiontop" id="itemconditiontop9" name="itemconditiontop9" alt="Top"/>
+								</div>
+								<div class="itemsellerdiv" id="itemsellerdiv9" name="itemsellerdiv9">
+									<span class="itemseller1" id="itemseller19"></span>
+									<span class="itemseller2" id="itemseller29"></span>
+									<span class="itemseller3" id="itemseller39"></span>
+								</div>
+								<div class="itemshippingdiv" id="itemshippingdiv9" name="itemshippingdiv9">
+									<span class="itemshipping1" id="itemshipping19"></span>
+								</div>
+								<div class="itempricediv" id="itempricediv9" name="itempricediv9">
+									<span class="itempricecon" id="itempricecon9"></span>
+									<span class="itempriceloca" id="itempriceloca9"></span>
+								</div>
+							</div>
+						</div>
+						<input class="itemredcross" id="itemredcross9" name="itemredcross9" type="image" src="imgs/redcross.png" alt="close"/>
+					</div>
+					<div class="newitem" id="newitem10" name="newitem10">
+						<div class="outerinfo" id="outerinfo10" name="outerinfo10">
+							<div class="itemimgdiv" id="itemimgdiv10" name="itemimgdiv10">
+								<img class="itemimg" id="itemimg10" name="itemimg10" alt="itemimg"/>
+							</div>
+							<div class="infodiv" id="infodiv10" name="infodiv10">
+								<div class="itemtitlediv" id="itemtitlediv10" name="itemtitlediv10">
+									<a class="itemtitle" id="itemtitle10" name="itemtitle10"></a>
+								</div>
+								<div class="itemcategorydiv" id="itemcategorydiv10" name="itemcategorydiv10">
+									<span class="itemcategoryca" id="itemcategoryca10"></span>
+									<span class="itemcategoryco" id="itemcategoryco10"></span>
+									<input type="image" class="itemcategoryre" id="itemcategoryre10" name="itemcategoryre10" alt="Re->"/>
+								</div>
+								<div class="itemconditiondiv" id="itemconditiondiv10" name="itemconditiondiv10">
+									<span class="itemconditioncon" id="itemconditioncon10"></span>
+									<img class="itemconditiontop" id="itemconditiontop10" name="itemconditiontop10" alt="Top"/>
+								</div>
+								<div class="itemsellerdiv" id="itemsellerdiv10" name="itemsellerdiv10">
+									<span class="itemseller1" id="itemseller110"></span>
+									<span class="itemseller2" id="itemseller210"></span>
+									<span class="itemseller3" id="itemseller310"></span>
+								</div>
+								<div class="itemshippingdiv" id="itemshippingdiv10" name="itemshippingdiv10">
+									<span class="itemshipping1" id="itemshipping110"></span>
+								</div>
+								<div class="itempricediv" id="itempricediv10" name="itempricediv10">
+									<span class="itempricecon" id="itempricecon10"></span>
+									<span class="itempriceloca" id="itempriceloca10"></span>
+								</div>
+							</div>
+						</div>
+						<input class="itemredcross" id="itemredcross10" name="itemredcross10" type="image" src="imgs/redcross.png" alt="close"/>
+					</div>
+				</div>
+				<input class="showml" id="showml" name="showml" type="button" value="showmoreorless"/>
+			</div>
+		</div>
+	<noscript></body>
+</html>

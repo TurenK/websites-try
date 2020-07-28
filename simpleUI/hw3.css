@@ -1,0 +1,84 @@
+body {
+	margin: auto;
+	display: flex;
+	background-color: #0000FF;
+	overflow: scroll;
+	color: #252F33;
+}
+
+.outer-back{
+	margin:0 auto;
+	left:0;
+	right:0;
+	background-color: #00FFFF;
+	display: inline-block;
+	justify-content: flex-start;
+	width: 735px;
+	height: 600px;
+	color: #252F33;
+}
+
+.header {
+	background: url("header.png");
+	height: 99px;
+	width: 680px;
+	margin-left: 25px; 
+	font-size: 35px;
+	line-height: 85px;
+	font-weight: bold;
+	text-indent: 25px;
+	font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", "serif";
+	color: #252F33;
+}
+
+a {
+	text-decoration: NONE;
+	color: #252F33;
+}
+
+.bar {
+	background-image: url("bar.png");
+	height: 57px;
+	width: 680px;
+	margin-left: 25px; 
+}
+
+.bar1{
+	font-size: 15px;
+	height: 57px;
+	width: 645px;
+	display: inline-flex;
+	justify-content: space-around;
+	align-content: center;
+	font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
+	color: #252F33;
+}
+
+.link{
+	line-height: 57px;
+	text-align: center;
+	align-content: center;
+	color: #252F33;
+	padding-left: -10px;
+}
+
+.article-title{
+	padding-left: 15px;
+	width: 680px;
+	font-size: 25px;
+	line-height: 50px;
+	margin-left: 25px; 
+	font-weight: bold;
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
+	color: #2B486A;
+}
+
+.article-content{
+	padding-left: 15px;
+	width: 680px;
+	font-size: 13px;
+	line-height: 10px;
+	margin-left: 25px; 
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, "sans-serif";
+	color: #0F1A1C;
+}
